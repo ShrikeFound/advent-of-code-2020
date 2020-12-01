@@ -2,7 +2,7 @@
 
 //find the two entries that sum to 2020 and then multiply those two numbers together.
 
-const input = [
+let input = [
   1686,
   1983,
   1801,
@@ -222,8 +222,11 @@ for (let i = 0; i < input.length; i++){
 //you need to sort the array, then have two pointers at each end. you shift the left pointer up if the sum is lower than the target.
 //shift the right pointer if the sum is higher than the target amount.
 
+//trying it out on the first challenge.
 
-input.sort()
+input.sort(function (a, b) {
+  return a - b
+})
 
 let leftPointer = 0
 let rightPointer = input.length-1
@@ -241,3 +244,35 @@ while (sum !== 2020) {
 console.log(sum);
 console.log("this version gets us the same result as the first:")
 console.log(input[leftPointer] * input[rightPointer])
+
+
+
+//now for the second challenge
+
+//gonna keep the first loop
+for (let i = 0; i < input.length; i++){
+  leftPointer = i+1 //left pointer starts after first number
+  rightPointer = input.length - 1
+  sum = input[i] + input[leftPointer] + input[rightPointer]
+  console.log(sum)
+  while (leftPointer < rightPointer) { // have to do this instead of checking for sum otherwise it'd end after the first loop
+    if (sum === 2020) {
+      console.log("numbers are: " + input[i] + " " + input[leftPointer] + " " + input[rightPointer])
+      console.log(input[i]*input[leftPointer]*input[rightPointer])
+      return
+    } else if (sum > 2020) {
+      rightPointer = rightPointer - 1
+      sum = input[i] + input[leftPointer] + input[rightPointer]
+      console.log(sum);
+
+    } else if (sum < 2020) {
+      leftPointer = leftPointer + 1
+      sum = input[i] + input[leftPointer] + input[rightPointer]
+      console.log(sum);
+    }
+  }
+
+
+}
+
+//works! 2 part done. yay!
