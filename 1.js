@@ -222,7 +222,22 @@ for (let i = 0; i < input.length; i++){
 //you need to sort the array, then have two pointers at each end. you shift the left pointer up if the sum is lower than the target.
 //shift the right pointer if the sum is higher than the target amount.
 
+
 input.sort()
-leftPointer = 0
-rightPointer = input.length
-console.log(rightPointer)
+
+let leftPointer = 0
+let rightPointer = input.length-1
+let sum = input[leftPointer] + input[rightPointer]
+
+while (sum !== 2020) {
+  if (sum > 2020) {
+    rightPointer = rightPointer - 1
+    sum = input[leftPointer] + input[rightPointer]
+  } else if (sum < 2020) {
+    leftPointer = leftPointer + 1
+    sum = input[leftPointer] + input[rightPointer]
+  }
+}
+console.log(sum);
+console.log("this version gets us the same result as the first:")
+console.log(input[leftPointer] * input[rightPointer])
