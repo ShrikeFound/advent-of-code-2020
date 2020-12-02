@@ -255,7 +255,7 @@ for (let i = 0; i < input.length; i++){
   rightPointer = input.length - 1
   sum = input[i] + input[leftPointer] + input[rightPointer]
   console.log(sum)
-  while (leftPointer < rightPointer) { // have to do this instead of checking for sum otherwise it'd end after the first loop
+  while (leftPointer < rightPointer) { 
     if (sum === 2020) {
       console.log("numbers are: " + input[i] + " " + input[leftPointer] + " " + input[rightPointer])
       console.log(input[i]*input[leftPointer]*input[rightPointer])

@@ -999,7 +999,7 @@ const input = [
 "2-6 r: rrzrcd",
 "10-16 n: lvknnwnnvsmnnnnhn",
 "12-13 r: rrrpjrrrrrrtfrkwmr"]
-
+//holy string methods, Batman!
 const checkValidity = (str) => {
   let min = str.slice(0, str.indexOf("-"));
   let max = str.slice(str.indexOf("-")+1, str.indexOf(" "));
@@ -1007,10 +1007,11 @@ const checkValidity = (str) => {
   let password = str.slice(str.indexOf(":") + 1)
 
   num = password.split(char).length - 1
-  console.log("---------------------");
-  console.log(str)
-  console.log(char, password);
-  console.log(num,min,max);
+  // console.log("---------------------");
+
+  // console.log(str)
+  // console.log(char, password);
+  // console.log(num,min,max);
 
   if (num >= min && num <= max) {
     console.log("valid");
@@ -1028,3 +1029,38 @@ for (let i = 0; i < input.length; i++){
   }
 }
 console.log(valid);
+
+
+//alright, new validation
+
+//numbers are positions
+//character must be in exactly one of these.
+
+const validate = (str) => {
+  let firstPosition = Number(str.slice(0, str.indexOf("-")));
+  let secondPosition = Number(str.slice(str.indexOf("-") + 1, str.indexOf(" ")));
+  let password = str.slice(str.indexOf(":") + 1)
+  let char = str.slice(str.indexOf(" ") + 1, str.indexOf(":"));
+
+  if (password[firstPosition] === char && password[secondPosition] !== char) {
+    console.log(str,firstPosition,secondPosition,password,password[firstPosition],password[secondPosition],char)
+    console.log(true);
+    return true
+  } else if (password[firstPosition] !== char && password[secondPosition] === char) {
+
+    console.log(str, firstPosition, secondPosition, password, password[firstPosition], password[secondPosition], char);
+    console.log(true);
+    return true
+  } else {
+    // console.log(false);
+    return false    
+  }
+
+}
+let newCounter = 0
+for (let i = 0; i < input.length; i++){
+  if (validate(input[i])) {
+    newCounter = newCounter + 1
+  }
+}
+console.log(newCounter);
