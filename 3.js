@@ -329,39 +329,65 @@ const input =
 //this is a lot to manually add quotes and commas to. so I just split it. Shoulda done this from the beginning. /shrug
 
 const list = input.split("\n");
-// console.log(list.length);
-let x = 0 //this is the position within the row
-let y = 0 //this is the index for the row itself
-let treeCount = 0
+
+
+//made a toboggan module that'll move down a slow and count the trees it hits.
+const Toboggan = (() => {
+  let x = 0 //this is the position within the row
+  let y = 0 //this is the index for the row itself
+  let treeCount = 0
     
-const traverse = (moveRight,moveDown) => {
+  const traverse = (moveRight,moveDown) => {
 
-  x = (x + moveRight) % list[y].length
-  y = y + moveDown;
-  // console.log(list[y])
-  if (list[y][x] === '#'){
-    treeCount = treeCount + 1;
+    x = (x + moveRight) % list[y].length
+    y = y + moveDown;
+    // console.log(list[y])
+    if (list[y][x] === '#'){
+      treeCount = treeCount + 1;
+    }
   }
+
+  const ski = (mr, md) => {
+    x = 0
+    y = 0
+    treeCount = 0
+    while (y < list.length - 1 ) {
+      traverse(mr,md);
+    }
+    return treeCount
+  }
+
+  return {
+    ski,traverse
+  }
+
+
+
+})();
+    
+
+//part 1 answer!
+console.log(Toboggan.ski(3, 1));
+
+//part 2, multiple traversals
+let skiTrip = [
+  Toboggan.ski(1, 1),
+  Toboggan.ski(3, 1),
+  Toboggan.ski(4, 1),
+  Toboggan.ski(7, 1),
+  Toboggan.ski(1, 2)
+]
+
+//there should be an easier way do this...
+const multiply = (arr) => {
+  product = 1
+  for (i = 0; i < arr.length; i++){
+    product *= arr[i]
+  }
+  return product
 }
 
-const ski = (mr, md) => {
-  x = 0
-  y = 0
-  treeCount = 0
-  while (y < list.length - 1 ) {
-    traverse(mr,md);
-  }
-  return treeCount
-}
-
-console.log(ski(3, 1));
-
-
-let slope1 = ski(1, 1)
-let slope2 = ski(3, 1)
-let slope3 = ski(4, 1)
-let slope4 = ski(7, 1)
-let slope5 = ski(1, 2)
-console.log(slope1,slope2,slope3,slope4,slope5)
-console.log(slope1*slope2*slope3*slope4*slope5)
+console.log(skiTrip)
+//answer for part 2!
+console.log(multiply(skiTrip));
 
