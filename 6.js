@@ -2294,17 +2294,4 @@ groups.forEach(group => {
 
 })
 console.log(num);
-// groups.forEach(group => {
-  
-//   for (let i = 0; i < letters.length; i++){
-//     if (group.includes(letters[i])) {
-//       // console.log("found a: ", letters[i]);
-//       num += 1;
-//     }
-//   }
-
-// })
-
-// console.log(num);
-
 
