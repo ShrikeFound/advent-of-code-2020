@@ -11,7 +11,7 @@ dotted black bags contain no other bags.`
 
 let lines = input.split("\n");
 // console.log(lines.length)
-//gonna puts each line in a hash as a bag with a name and a hash of its contents
+//gonna put each line in a hash as a bag with a name and a hash of its contents
 let bags = {}
 const bagRegex = /([\w ]+) (?=bags contain)/
 const contentsRegex = /\d+ ([ \w]+) bag?/g
@@ -43,7 +43,7 @@ for (i = 0; i < lines.length; i++){
   } else {
     //do nothing
   }
-
+  //fillin' the bag hash
   bags[name] = content
 }
 
