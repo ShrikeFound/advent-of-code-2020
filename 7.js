@@ -595,9 +595,9 @@ striped lavender bags contain 5 dim teal bags, 3 light blue bags.
 striped lime bags contain 4 light black bags, 5 striped turquoise bags, 5 wavy cyan bags.`
 
 let lines = input.split("\n");
-
+console.log(lines.length)
 //gonna puts each line in a hash as a bag with a name and a hash of its contents
-bags = {}
+let bags = {}
 const bagRegex = /([\w ]+) (?=bags contain)/
 const contentsRegex = /\d+ ([ \w]+) bag?/g
 
@@ -632,4 +632,46 @@ for (i = 0; i < lines.length; i++){
   bags[name] = content
 }
 
-console.log(bags);
+
+console.log(Object.keys(bags).length);
+
+// gonna keep looking into each bag until:
+// we find a gold bag
+// there are no more bags to look through
+const lookIn = (bagName) => {
+  // console.log("====looking in ",bagName," ==========")
+  let bag = bags[bagName]
+  // console.log(bagName);
+  //if we've got a shiny gold bag rule here return true, we're done!
+  if (bag['shiny gold'] > 0) {
+    // console.log("found it in: ",bag);
+    return true
+  }
+
+  //if this is a dead end return false
+  if (Object.keys(bag).length <= 0) {
+        // console.log(bagName," is empty: ",bag);
+    return false
+  }
+
+  //return results of looking in inner bags (and their inner bags...and their inner bags..)
+  for (let innerBag in bag) {
+
+    if (lookIn(innerBag)) {
+      return true
+    }
+
+  }
+    
+}
+
+let num = 0
+for (let bag in bags) {
+  console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+  console.log(bag,bags[bag]);
+  if (lookIn(bag)) {
+    num += 1
+  }
+}
+
+console.log(num)
