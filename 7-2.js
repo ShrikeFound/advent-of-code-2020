@@ -60,19 +60,19 @@ for (i = 0; i < lines.length; i++){
 const countIn = (bagName) => {
   // console.log("====looking in ",bagName," ==========")
   let bag = bags[bagName]
-  let content = 0
+  let count = 1
   // console.log(bagName);
 
   //if this is a dead end this time we return 0
   if (Object.keys(bag).length <= 0) {
         // console.log(bagName," is empty: ",bag);
-    return 0
+    return count
   }
   //return results of looking in inner bags (and their inner bags...and their inner bags..)
   for (let innerBag in bag) {
-    content += bag[innerBag] * countIn(innerBag)
+    count += bag[innerBag] * countIn(innerBag)
   }
-  return content
+  return count
     
 }
 
@@ -84,5 +84,3 @@ for (let bag in bags) {
   console.log(bag,bags[bag]);
   console.log(countIn(bag))
 }
-
-console.log(num)
