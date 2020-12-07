@@ -50,11 +50,6 @@ for (i = 0; i < lines.length; i++){
 
 // console.log(Object.keys(bags).length);
 
-// gonna keep looking into each bag until:
-// we find a gold bag
-// there are no more bags to look through
-
-
 
 
 const countIn = (bagName) => {
