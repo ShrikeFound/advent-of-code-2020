@@ -595,3 +595,41 @@ striped lavender bags contain 5 dim teal bags, 3 light blue bags.
 striped lime bags contain 4 light black bags, 5 striped turquoise bags, 5 wavy cyan bags.`
 
 let lines = input.split("\n");
+
+//gonna puts each line in a hash as a bag with a name and a hash of its contents
+bags = {}
+const bagRegex = /([\w ]+) (?=bags contain)/
+const contentsRegex = /\d+ ([ \w]+) bag?/g
+
+const bagName = (line) => {
+  let name = line.match(bagRegex)[1]
+  return name
+  
+}
+
+const bagContents = (line) => {
+  let contents = line.match(contentsRegex);
+  return contents
+}
+
+
+
+for (i = 0; i < lines.length; i++){
+  let name = bagName(lines[i]);
+  let content = {}
+  let contents = bagContents(lines[i])
+  if (contents) {
+    contents.forEach(item => {
+    let num = Number(item.match(/(\d+)/)[1])
+    //regex isn't return the group for some reason so using a slice instead
+    let color = item.slice(item.indexOf(" ")+1,item.indexOf(" bag"));
+    content[color] = num
+  });
+  } else {
+    //do nothing
+  }
+
+  bags[name] = content
+}
+
+console.log(bags);
