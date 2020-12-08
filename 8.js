@@ -18,10 +18,16 @@ const gameConsole = (() => {
   let acc = 0;
   let memory = [];
 
-  const play = (instructions) =>{
+  const play = (instructions,mode) =>{
     for (let i = 0; i < instructions.length;){
       if (memory.includes(i)) {
-        return acc;
+        if (mode == 1) {
+          return acc
+        }else {
+          return 0;          
+        }
+
+        
       }
       memory.push(i);
       const instruction = instructions[i]
@@ -44,6 +50,7 @@ const gameConsole = (() => {
           return;
       }
     }
+    return acc
   }
   return {
     play
@@ -51,4 +58,6 @@ const gameConsole = (() => {
 })();
 
 
-console.log(gameConsole.play(instructions));
+console.log("part 1 answer: ", gameConsole.play(instructions, 1));
+
+console.log("part 2 answer: ",gameConsole.play(instructions));
