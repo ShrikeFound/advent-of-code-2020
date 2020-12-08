@@ -18,7 +18,9 @@ const gameConsole = (() => {
   let acc = 0;
   let memory = [];
 
-  const play = (instructions,mode) =>{
+  const play = (instructions, mode) => {
+    acc = 0;
+    memory = [];
     for (let i = 0; i < instructions.length;){
       if (memory.includes(i)) {
         if (mode == 1) {
@@ -33,7 +35,6 @@ const gameConsole = (() => {
       const instruction = instructions[i]
       const command     = instruction.slice(0, instruction.indexOf(" "))
       const argument     = Number(instruction.slice(instruction.indexOf(" ")))
-      console.log(command, ": ", argument);
       switch (command) {
         case "acc":
           acc += argument;
@@ -50,7 +51,11 @@ const gameConsole = (() => {
           return;
       }
     }
-    return acc
+    if (mode == 1) {
+      return "this shouldn't be happening!"
+    } else {
+      return acc
+    }
   }
   return {
     play
