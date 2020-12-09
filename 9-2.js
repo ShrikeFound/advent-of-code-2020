@@ -1004,8 +1004,8 @@ const input = rawInput.split("\n").map(item => {
   return Number(item);
 })
 
+// const key = 70639851
 const key = 70639851
-
 
 //for each index
 //increase the array being summed
@@ -1013,20 +1013,16 @@ const key = 70639851
 
 
 for (let i = 0; i < input.length; i++){
-  let start = i
-  let end = i + 1
-  let testers = input.slice(start, end)
-  let sum = testers.reduce(function (a, b) {
-    return a + b;
-  })
-  while (end < input.length) {
-    end++;
-    testers = input.slice(start, end)
-    sum = testers.reduce(function (a, b) {
-      return a + b;
-    })
+  for (let j = i + 1; j < input.length; j++){
+    let testArray = input.slice(i, j)
+    let sum = testArray.reduce(function(a, b){
+        return a + b;
+    }, 0);
     if (sum == key) {
-      return testers[0]+testers[testers.length-1]
+      console.log(Math.min(...testArray),Math.max(...testArray));
+      console.log(Math.min(...testArray) + Math.max(...testArray));
+
     }
   }
+ 
 }
