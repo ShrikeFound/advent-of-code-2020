@@ -1004,39 +1004,29 @@ const input = rawInput.split("\n").map(item => {
   return Number(item);
 })
 
-const step = 25
+const key = 70639851
 
-const validate = (arr,sum) => {
-  arr.sort(function (a, b) {
-    return a - b
+
+//for each index
+//increase the array being summed
+//until we find a sum of key
+
+
+for (let i = 0; i < input.length; i++){
+  let start = i
+  let end = i + 1
+  let testers = input.slice(start, end)
+  let sum = testers.reduce(function (a, b) {
+    return a + b;
   })
-  leftPointer = 0
-  rightPointer = arr.length - 1;
-  while (leftPointer < rightPointer) {
-    if (arr[leftPointer] + arr[rightPointer] == sum) {
-      return false
+  while (end < input.length) {
+    end++;
+    testers = input.slice(start, end)
+    sum = testers.reduce(function (a, b) {
+      return a + b;
+    })
+    if (sum == key) {
+      return testers[0]+testers[testers.length-1]
     }
-    else if (arr[leftPointer] + arr[rightPointer] > sum) {
-      rightPointer = rightPointer - 1
-    } else if (arr[leftPointer] + arr[rightPointer] < sum) {
-      leftPointer = leftPointer + 1
-    }
-  } 
-  return true
-}
-
-
-for (let i = step; i < input.length; i++){
-  let start = i-step;
-  let end = i ;
-  test = input.slice(start, end)
-  if (validate(test, input[i])) {
-    console.log(input[i]);
-    break;
   }
 }
-
-
-let sum = input[leftPointer] + input[rightPointer]
-
-
