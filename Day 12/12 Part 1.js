@@ -779,89 +779,106 @@ W3
 F31`
 
 let commands = input.split("\n").map(command => (
-  { command: command.match(/\D/g)[0], argument: command.match(/\d+/)[0] }
+  { command: command.match(/\D/g)[0], argument: Number(command.match(/\d+/)[0]) }
 ));
 
-const Ship = (() => {
-  let heading = "east"
-  const headings = ["north", "east", "south", "west"]
-  let x = 0
-  let y = 0
+const ship = (() => {
+  let x = 0;
+  let y = 0;
+  const compassDirections = {
+    0: "east",
+    90: "south",
+    180: "west",
+    270: "north"
+  }
+  let orientation = 0;
+  let heading = compassDirections[orientation]
 
-  const rotateRight = (arg) => {
-    console.log("rotating by " + arg / 90)
-    heading = (heading + (180 / 90))% headings.length
+  const toot = () => {
+    console.log(orientation,heading);
+    console.log(x, y)
+    console.log(Math.abs(x) + Math.abs(y));
   }
 
-  const rotateLeft = (arg) => {
-    heading = (heading - (180 / 90))% headings.length
-  }
-
-  const moveNorthSouth = (arg) => {
-    console.log("moving north/south by "+ arg)
-  }
-
-  const moveEastWest = (arg) => {
-    console.log("moving east/west by "+ arg)
-  }
-
-  const moveForward = (arg) => {
-    console.log("moving forward by "+ arg)
-  }
-
-  const followInstruction = (instruction) => {
-    const command  = instruction.command
-    let argument = instruction.argument
-    // console.log(instruction)
-    // console.log(command);
-    if (command === 'N' || command === 'S') {
-      if (command === 'S') argument = argument * -1;
-      moveNorthSouth(argument);
-    } else if (command === 'W' || command === 'E') {
-      if (command === 'W') argument = argument * -1;
-      moveEastWest(argument)
-    } else if (command === 'L') {
-      rotateLeft(argument)
-    } else if (command === 'R') {
-      rotateRight(argument)
-    } else if (command === 'F') {
-      moveForward(argument)
-    } else {
-      //shrug
+  const moveCardinal = (command,argument) => {
+    switch (command) {
+      case 'N':
+        y += argument
+        break;
+      case 'S':
+        y -= argument
+        break;
+      case 'E':
+        x += argument
+        break;
+      case 'W':
+        x -= argument
+        break;
     }
   }
 
-  return {
-    followInstruction
+  const moveForward = (command,argument) => {
+    switch (heading) {
+      case "north":
+        y += argument;
+        break;
+      case "south":
+        y -= argument;
+        break;
+      case "east":
+        x += argument;
+        break;
+      case "west":
+        x -= argument;
+        break;
+    }
   }
 
 
+  const rotate = (command, argument) => {
+    let degreeTurn = argument
+    if (command === "L") {
+      degreeTurn = degreeTurn*-1
+    }
+    orientation = orientation + degreeTurn
+    if (orientation >= 360) {
+      orientation = orientation - 360
+    }
+    if (orientation < 0) {
+      orientation = orientation + 360
+    }
+    heading = compassDirections[orientation]
+  }
+
+  const followCommand = ({ command, argument }) => {
+    if (command === "N" || command === "E" || command === "S" || command === "W") {
+      moveCardinal(command, argument);
+      return true
+    }
+    if (command === "L" || command === "R") {
+      rotate(command, argument);
+      return true
+    }
+    if (command === "F") {
+      moveForward(command, argument);
+      return true  
+    }
+    return false
+  }
+
+  return {
+    toot,
+    followCommand
+  }
 })();
 
-// commands.forEach(command => {
-//   console.log(command)
-//   Ship.followInstruction(command);
-// })
 
-console.log(90/ 90)
-console.log(180 / 90)
-console.log(-270 / 90)
-console.log(360/ 90)
-
-const headings = ["north", "east", "south", "west"]
-let heading = 0
-console.log(heading)
-console.log(headings[heading])
-heading = (heading - (180 / 90))% headings.length
-console.log(heading)
-console.log(headings[heading]);
-
-
-heading = (heading - (180 / 90))% headings.length
-console.log(heading)
-console.log(headings[heading]);
-
-
-heading = (heading - (360 / 90))% headings.length
-console.log(heading)
-console.log(headings[heading]);
+// console.log(commands[0]);
+// ship.followCommand(commands[0]);
+ship.toot()
+for (let i = 0; i < commands.length; i++) {
+  // console.log(commands[i]);
+  ship.followCommand(commands[i])
+  // ship.toot();
+}
+ship.toot()
